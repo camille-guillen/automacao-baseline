@@ -2,17 +2,20 @@
 
 ## Visão Geral
 
-A automação de criação de baselines ATC foi desenvolvida com o objetivo de reduzir o esforço operacional e o tempo gasto no tratamento manual de objetos identificados pelo ATC (ABAP Test Cockpit) em projetos de conversão SAP S/4HANA.
+A automação de criação de baselines ATC foi desenvolvida com o objetivo de reduzir o esforço operacional e automatizar o tratamento massivo de objetos identificados pelo ATC (ABAP Test Cockpit) em projetos de conversão SAP S/4HANA.
 
-A solução foi inicialmente desenvolvida pela Débora e surgiu devido ao alto volume de objetos encontrados nos projetos de conversão, onde alguns clientes possuem entre 1.500 até mais de 50.000 objetos ATC.
+A solução foi inicialmente desenvolvida pela Débora e surgiu devido ao alto volume de objetos encontrados em projetos de conversão SAP, onde clientes frequentemente possuem entre:
+- 1.500 objetos;
+- 10.000 objetos;
+- até mais de 50.000 objetos ATC.
 
 Grande parte desses objetos:
 - São obsoletos;
-- Não possuem impacto real no negócio;
+- Não possuem impacto funcional;
 - Não são tratáveis manualmente;
-- Geram alto esforço operacional.
+- Não justificam esforço de correção.
 
-A automação permite analisar, filtrar e criar baselines automaticamente no SAP utilizando regras definidas via Excel.
+O principal objetivo da solução é automatizar a criação de baselines utilizando regras previamente definidas via Excel, eliminando o trabalho manual objeto a objeto.
 
 ---
 
@@ -20,40 +23,45 @@ A automação permite analisar, filtrar e criar baselines automaticamente no SAP
 
 ## Processo Manual (AS IS)
 
-Atualmente a criação de baselines é feita manualmente através da transação ATC no SAP.
+Atualmente a criação de baselines é realizada manualmente através da transação padrão do ATC no SAP.
 
-### Fluxo atual:
-1. Executar o ATC;
-2. Filtrar os objetos;
-3. Analisar os resultados;
-4. Criar os baselines manualmente;
-5. Repetir o processo para milhares de objetos.
+## Fluxo Atual
 
-### Problemas encontrados:
+1. Execução do run do ATC;
+2. Filtragem manual dos objetos;
+3. Análise individual dos resultados;
+4. Criação manual dos baselines;
+5. Repetição do processo para milhares de objetos.
+
+## Principais Problemas
+
 - Alto esforço operacional;
 - Longo tempo de execução;
 - Baixa escalabilidade;
-- Risco operacional;
+- Alto custo operacional;
 - Falta de padronização;
-- Dificuldade em tratar grandes volumes.
+- Risco operacional elevado;
+- Inviabilidade de tratamento massivo manual.
 
 ---
 
 # Solução Desenvolvida
 
 A solução automatiza completamente o processo de criação de baselines utilizando:
-- Leitura do último run do ATC;
-- Controle de filtros via Excel;
-- Criação automática dos baselines no SAP.
+- Leitura automática do último run do ATC;
+- Controle de regras e filtros via Excel;
+- Criação automática dos baselines diretamente no SAP.
 
-A implementação foi construída utilizando as mesmas classes standard SAP identificadas através de debug técnico do processo nativo da SAP.
+A implementação foi construída utilizando as mesmas classes standard SAP identificadas através de debug técnico do processo nativo SAP.
 
-## Benefícios da abordagem
-- Redução de risco técnico;
+## Benefícios Técnicos da Abordagem
+
 - Compatibilidade com S/4HANA;
-- Maior segurança;
+- Redução de risco técnico;
+- Redução de risco de segurança;
 - Menor impacto em upgrades futuros;
-- Reutilização do comportamento standard SAP.
+- Reutilização do comportamento standard SAP;
+- Maior confiabilidade operacional.
 
 ---
 
@@ -62,28 +70,41 @@ A implementação foi construída utilizando as mesmas classes standard SAP iden
 ## Fluxo do Programa
 
 ### 1. Leitura do Último Run do ATC
+
 O programa identifica automaticamente o último resultado executado do ATC no ambiente SAP.
 
 ---
 
 ### 2. Leitura da Planilha Excel
-O Excel funciona como base de controle da automação.
 
-### Informações controladas no Excel:
+A planilha Excel funciona como base central de controle da automação.
+
+## Informações Controladas no Excel
+
 - Objetos baseline;
 - Tipo do objeto;
 - Filtros;
-- Regras;
-- Notas;
-- Declarações;
-- Critérios de tratamento.
+- Regras de tratamento;
+- Colunas de notas;
+- Identificação de declarações;
+- Critérios de baseline;
+- Grupos de baseline.
+
+Os filtros são definidos diretamente no Excel conforme o tipo de objeto e regras específicas do projeto.
 
 ---
 
 ### 3. Criação Automática dos Baselines
-Com base nas regras cadastradas no Excel, o programa cria automaticamente os baselines diretamente no ambiente SAP.
 
-Não é necessário criar os objetos manualmente um a um.
+Com base nas regras cadastradas na planilha, o programa cria automaticamente os baselines no ambiente SAP.
+
+A solução já realiza:
+- Criação automática dos objetos baseline;
+- Associação automática das informações;
+- Criação dos grupos de baseline;
+- Aplicação das regras definidas no Excel.
+
+Não é necessário criar os objetos manualmente um a um na transação ATC.
 
 ---
 
@@ -91,25 +112,29 @@ Não é necessário criar os objetos manualmente um a um.
 
 ## Controle via Excel
 
-Os filtros são controlados diretamente pela planilha.
+Toda a lógica da automação é controlada via Excel.
 
-### Possibilidades:
+## Possibilidades da Estrutura
+
 - Separação por tipo de objeto;
+- Controle de filtros;
 - Controle de regras;
 - Definição de objetos baseline;
 - Controle de notas;
-- Criação de grupos de baseline;
-- Identificação de objetos tratáveis.
+- Criação de grupos;
+- Identificação de objetos tratáveis;
+- Regras específicas por projeto.
 
 ---
 
-# Reports Gerados
+# Reports e Retornos
 
-A solução também possui reports para:
+A solução também possui geração de reports para:
 - Retorno de dados;
-- Validação dos filtros;
+- Validação dos filtros aplicados;
 - Controle dos grupos de baseline;
-- Auditoria dos objetos processados.
+- Auditoria dos objetos processados;
+- Rastreamento da automação executada.
 
 ---
 
@@ -120,28 +145,31 @@ A automação já foi validada em clientes como:
 - Cornelio;
 - CSN.
 
-## Benefícios alcançados
-- Redução significativa dos objetos tratados manualmente;
+## Benefícios Obtidos
+
+- Redução significativa da quantidade de objetos tratados manualmente;
 - Redução de custo operacional;
-- Redução de esforço técnico;
-- Redução de tempo;
+- Redução do esforço técnico;
+- Redução do tempo de execução;
 - Padronização do processo;
 - Maior escalabilidade;
-- Melhor qualidade nas entregas.
+- Melhor qualidade das entregas;
+- Maior velocidade nos projetos de conversão.
 
 ---
 
 # Integração com Portal MIGNOW
 
-Já existe uma melhoria de execução ATC desenvolvida no Portal MIGNOW pelo Pablo e Otávio.
+Já existe uma melhoria de execução do ATC desenvolvida no Portal MIGNOW pelo Pablo e Otávio.
 
 Parte das funcionalidades necessárias para integração da solução já estão disponíveis.
 
-## Funcionalidades existentes no Portal
+## Funcionalidades Existentes no Portal
+
 - Tela Parameters;
 - Cadastro ATC Result Execution;
 - Estrutura de tabelas;
-- Controle de baselines na aba "Control".
+- Controle de Baselines através da aba "Control".
 
 ---
 
@@ -149,14 +177,17 @@ Parte das funcionalidades necessárias para integração da solução já estão
 
 O objetivo da nova demanda é integrar a automação da Débora diretamente ao Portal MIGNOW.
 
-## Fluxo esperado no Portal
+## Fluxo Esperado no Portal
+
 1. Leitura automática do último run do ATC;
-2. Consumo dos filtros definidos no Excel;
+2. Consumo dos filtros definidos via Excel;
 3. Criação automática dos baselines;
 4. Atualização automática no ambiente SAP;
-5. Centralização do processo no Portal.
+5. Centralização da execução no Portal MIGNOW;
+6. Controle operacional centralizado;
+7. Execução automatizada através de ação no Portal.
 
-A intenção é permitir que toda execução seja feita através do Portal, eliminando atividades manuais diretamente na transação ATC.
+A ideia é transformar o processo em uma execução automatizada via Portal, eliminando operações manuais diretamente na transação ATC.
 
 ---
 
@@ -165,16 +196,45 @@ A intenção é permitir que toda execução seja feita através do Portal, elim
 ## Antes
 
 ### Manual
+
 - Criação manual dos baselines;
 - Filtragem manual;
 - Alto esforço operacional;
-- Baixa escalabilidade.
+- Baixa escalabilidade;
+- Processo demorado.
+
+---
+
+## Depois
 
 ### Automático
-- Leitura automática do Excel;
+
+- Leitura automática do último run;
+- Consumo automático da planilha;
 - Criação automática no SAP;
 - Execução padronizada;
-- Escalabilidade.
+- Maior escalabilidade;
+- Redução de esforço operacional.
+
+---
+
+# Arquitetura Conceitual
+
+```text
+ATC Run SAP
+     ↓
+Leitura Automática do Último Run
+     ↓
+Leitura da Planilha Excel
+     ↓
+Aplicação dos Filtros e Regras
+     ↓
+Criação Automática dos Baselines
+     ↓
+Atualização no Ambiente SAP
+     ↓
+Retorno / Reports / Controle
+```
 
 ---
 
@@ -184,14 +244,34 @@ Foi solicitado que o Cabrera:
 - Avalie tecnicamente a solução;
 - Analise a arquitetura atual;
 - Estruture a demanda junto ao time de Discovery;
-- Levante os requisitos para desenvolvimento no Portal MIGNOW.
+- Levante requisitos técnicos;
+- Defina abordagem de integração com Portal MIGNOW.
 
 ---
 
-# Referência
+# Referências
 
-## Documento Relacionado
-- Melhorias na execução do ATC - Clean Core
+## Documento Relacionado — Clean Core
 
-Link:
 https://mignow.atlassian.net/wiki/spaces/PM/pages/1124433933/Melhorias+na+execu+o+do+ATC+-+Clean+Core
+
+---
+
+## Documento da Automação
+
+https://mignow.atlassian.net/wiki/spaces/PM/pages/1836744714/Automa+o+criar+baselines+em+massa+ZMIG_CREATEBASELINE
+
+---
+
+# Tecnologias e Conceitos Envolvidos
+
+- SAP ATC (ABAP Test Cockpit)
+- SAP S/4HANA
+- Clean Core
+- Baselines ATC
+- Automação SAP
+- ABAP
+- Excel Driven Automation
+- SAP Standard Classes
+- Portal MIGNOW
+- Discovery / Escalabilidade
